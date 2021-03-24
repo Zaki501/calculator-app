@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import { evaluate } from "mathjs"
 import styled from "styled-components"
 
-
 const STYLED_DIV = styled.div`
 display:inline-block;
 border: 4px solid black;
@@ -31,7 +30,7 @@ export default function Calculator() {
     const [input, setInput] = useState("");
     const [answer, setAnswer] = useState("");
     const [prevInput, setprevInput] = useState("");
- 
+
     const stateRef = useRef();
     stateRef.current = input; //this is the current input
 
@@ -48,23 +47,37 @@ export default function Calculator() {
     }
     function evaluateInput() {
         function handleChange() {
-            setInput(() => evaluate(input));
-            setAnswer((b) => b = stateRef.current) //check this
-            setprevInput((c) => c = input + " =")
+            let bool = true;
 
+            try {
+                evaluate(input);
+            }
+            catch (e) {
+                bool = false
+                console.log(e);
+            }
+
+            if (bool === true) {
+                setInput(() => evaluate(input))
+                setAnswer((b) => b = stateRef.current) //check this
+                setprevInput((c) => c = input + " =")
+            } else {
+                setInput(() => "");
+                setAnswer(() => "");
+                setprevInput(() => "Invalid Entry")
+            }
         }
         return (
             <STYLED_BUTTON onClick={handleChange}>{"="}</STYLED_BUTTON>
         )
 
     }
-    
-    function Input() {
 
+    function Input() {
         return (
             <div>
-            <STYLED_INPUT value={`${prevInput} ${answer}`}/>
-            <STYLED_INPUT value={input} />
+                <STYLED_INPUT value={`${prevInput} ${answer}`} />
+                <STYLED_INPUT value={input} />
             </div>
         )
     }
@@ -79,9 +92,9 @@ export default function Calculator() {
             <STYLED_DIV>
 
                 <STYLED_ROW>
-                    
+
                     <Input />
-                    
+
                 </STYLED_ROW>
                 <STYLED_ROW>
                     {Key("(")}
