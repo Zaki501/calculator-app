@@ -8,17 +8,22 @@ border: 4px solid black;
 border-radius: 5px;
 `
 const STYLED_INPUT = styled.input`
+background-color: white;
 height: 50px;
-width: 182px;
+width: 200px;
 margin-bottom: 1px;
 display: flex;
 `
 const STYLED_ROW = styled.div`
+align-items: center;
+background-color:white;
 display: flex;
-align-items: space-between;
+
+justify-content: space-around;
 `
 const STYLED_BUTTON = styled.button`
-  display: inline-block;
+background-color: white;
+  
   font-size: 1em;
   border-radius: 2px;
   height: 50px;
